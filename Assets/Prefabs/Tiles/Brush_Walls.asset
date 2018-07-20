@@ -1,0 +1,118 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3b8fd16a10f03149ae40192bbd7696f, type: 3}
+  m_Name: Brush_Walls
+  m_EditorClassIdentifier: 
+  tiles:
+  - prefabs:
+    - prefab: {fileID: 1963793598426270, guid: 90c304da13f3be84cb28b6e37a121a78, type: 2}
+      weight: 1
+    rule: 0000000001000000000000000100000001000000000000000100000000000000
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - prefabs:
+    - prefab: {fileID: 1353022430280838, guid: c5e5dbb1750688f42b293b6c3d83c739, type: 2}
+      weight: 1
+    rule: 0000000001000000000000000200000002000000000000000200000000000000
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - prefabs:
+    - prefab: {fileID: 1353022430280838, guid: c5e5dbb1750688f42b293b6c3d83c739, type: 2}
+      weight: 1
+    rule: 0000000002000000000000000100000002000000000000000200000000000000
+    rotation: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
+  - prefabs:
+    - prefab: {fileID: 1353022430280838, guid: c5e5dbb1750688f42b293b6c3d83c739, type: 2}
+      weight: 1
+    rule: 0000000002000000000000000200000002000000000000000100000000000000
+    rotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
+  - prefabs:
+    - prefab: {fileID: 1353022430280838, guid: c5e5dbb1750688f42b293b6c3d83c739, type: 2}
+      weight: 1
+    rule: 0000000002000000000000000200000001000000000000000200000000000000
+    rotation: {x: 0, y: 0.70710677, z: 0, w: -0.70710677}
+  - prefabs:
+    - prefab: {fileID: 1924166440383878, guid: a91be609922a7a44fafc5a470cf45925, type: 2}
+      weight: 1
+    rule: 0000000001000000000000000100000002000000000000000200000000000000
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - prefabs:
+    - prefab: {fileID: 1924166440383878, guid: a91be609922a7a44fafc5a470cf45925, type: 2}
+      weight: 1
+    rule: 0000000002000000000000000100000002000000000000000100000000000000
+    rotation: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
+  - prefabs:
+    - prefab: {fileID: 1924166440383878, guid: a91be609922a7a44fafc5a470cf45925, type: 2}
+      weight: 1
+    rule: 0000000002000000000000000200000001000000000000000100000000000000
+    rotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
+  - prefabs:
+    - prefab: {fileID: 1924166440383878, guid: a91be609922a7a44fafc5a470cf45925, type: 2}
+      weight: 1
+    rule: 0000000001000000000000000200000001000000000000000200000000000000
+    rotation: {x: 0, y: 0.70710677, z: 0, w: -0.70710677}
+  - prefabs:
+    - prefab: {fileID: 1830178620842992, guid: d8decd3b466d7384cb73e6e8ad3ad6cc, type: 2}
+      weight: 1
+    rule: 0100000002000000000000000200000002000000000000000200000000000000
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - prefabs:
+    - prefab: {fileID: 1830178620842992, guid: d8decd3b466d7384cb73e6e8ad3ad6cc, type: 2}
+      weight: 1
+    rule: 0000000002000000000000000200000002000000010000000200000000000000
+    rotation: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
+  - prefabs:
+    - prefab: {fileID: 1830178620842992, guid: d8decd3b466d7384cb73e6e8ad3ad6cc, type: 2}
+      weight: 1
+    rule: 0000000002000000000000000200000002000000000000000200000001000000
+    rotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
+  - prefabs:
+    - prefab: {fileID: 1830178620842992, guid: d8decd3b466d7384cb73e6e8ad3ad6cc, type: 2}
+      weight: 1
+    rule: 0000000002000000010000000200000002000000000000000200000000000000
+    rotation: {x: 0, y: 0.70710677, z: 0, w: -0.70710677}
+  - prefabs:
+    - prefab: {fileID: 1031465257495184, guid: a2e956ca40e918d4a8ca3ac11ed639e4, type: 2}
+      weight: 1
+    rule: 0000000001000000000000000100000001000000000000000200000000000000
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - prefabs:
+    - prefab: {fileID: 1031465257495184, guid: a2e956ca40e918d4a8ca3ac11ed639e4, type: 2}
+      weight: 1
+    rule: 0000000001000000000000000100000002000000000000000100000000000000
+    rotation: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
+  - prefabs:
+    - prefab: {fileID: 1031465257495184, guid: a2e956ca40e918d4a8ca3ac11ed639e4, type: 2}
+      weight: 1
+    rule: 0000000002000000000000000100000001000000000000000100000000000000
+    rotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
+  - prefabs:
+    - prefab: {fileID: 1031465257495184, guid: a2e956ca40e918d4a8ca3ac11ed639e4, type: 2}
+      weight: 1
+    rule: 0000000001000000000000000200000001000000000000000100000000000000
+    rotation: {x: 0, y: 0.70710677, z: 0, w: -0.70710677}
+  - prefabs:
+    - prefab: {fileID: 1652279349318062, guid: 560ec24c9fdb5c64390358ede9115209, type: 2}
+      weight: 1
+    rule: 0000000002000000000000000200000002000000000000000200000000000000
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - prefabs:
+    - prefab: {fileID: 1592187734035562, guid: 74110505b3ff61a4fb1ae0d981548248, type: 2}
+      weight: 1
+    rule: 0000000002000000000000000100000001000000000000000200000000000000
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - prefabs:
+    - prefab: {fileID: 1592187734035562, guid: 74110505b3ff61a4fb1ae0d981548248, type: 2}
+      weight: 1
+    rule: 0000000001000000000000000200000002000000000000000100000000000000
+    rotation: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
+  size: 2
+  group: Walls
+  interactGroups:
+  - Walls
