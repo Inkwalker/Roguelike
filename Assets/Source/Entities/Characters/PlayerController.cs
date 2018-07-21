@@ -31,6 +31,11 @@ namespace Roguelike.Entities
             return Character.Move(tile.Position, 5);
         }
 
+        public MoveState PickItem(Item item)
+        {
+            return Character.PickItem(item);
+        }
+
         public void HandlePositionChange(Entity entity)
         {
             map.UpdateVisibility(entity.Position, Character.ViewDistance);

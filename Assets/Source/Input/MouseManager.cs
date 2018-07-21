@@ -1,4 +1,5 @@
 ﻿using Roguelike.Dungeon;
+using Roguelike.Entities;
 using Roguelike.Gameplay;
 using UnityEngine;
 
@@ -36,6 +37,12 @@ namespace Roguelike
                     if (tile != null)
                     {
                         gameManager.OnTileSelected(tile);
+                    }
+
+                    var item = raycastHit.collider.gameObject.GetComponent<Item>();
+                    if (item != null)
+                    {
+                        gameManager.OnItemSelected(item);
                     }
                 }
             }

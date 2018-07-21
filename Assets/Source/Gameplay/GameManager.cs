@@ -110,6 +110,14 @@ namespace Roguelike.Gameplay
             }
         }
 
+        public void OnItemSelected(Item item)
+        {
+            if (gameState == GameState.PlayerTurn)
+            {
+                activeMoveState = player.PickItem(item);
+            }
+        }
+
         private enum GameState
         {
             PlayerTurn,

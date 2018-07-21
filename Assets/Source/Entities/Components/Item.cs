@@ -2,7 +2,7 @@
 
 namespace Roguelike.Entities
 {
-    public class Item : MonoBehaviour
+    public class Item : EntityComponent
     {
     }
 }

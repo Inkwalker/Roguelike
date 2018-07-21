@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Roguelike.Entities
 {
-    public class Fighter : MonoBehaviour
+    public class Fighter : EntityComponent
     {
         [SerializeField] int maxHP;
         [SerializeField] int defense;
@@ -46,7 +46,6 @@ namespace Roguelike.Entities
         {
             List<IActionResult> results = new List<IActionResult>();
 
-            var entity = GetComponent<Entity>();
             var targetEntity = target.GetComponent<Entity>();
 
             int damage = Power - target.Defense;
@@ -55,7 +54,7 @@ namespace Roguelike.Entities
             {
                 results.Add(new MessageActionResult(
                     string.Format("{0} attacks {1} for {2} hit points.", 
-                    entity.DisplayName, 
+                    Entity.DisplayName, 
                     targetEntity.DisplayName, 
                     damage)));
 
@@ -64,7 +63,7 @@ namespace Roguelike.Entities
             else
             {
                 results.Add(new MessageActionResult(
-                    string.Format("{0} attacks {1} but does no damage.", entity.DisplayName, targetEntity.DisplayName)));
+                    string.Format("{0} attacks {1} but does no damage.", Entity.DisplayName, targetEntity.DisplayName)));
             }
 
             return results.ToArray();

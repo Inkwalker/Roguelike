@@ -108,6 +108,11 @@ namespace Roguelike.Dungeon
             return entityMap.GetBlocking(new Vector2Int(x, y));
         }
 
+        public void RemoveEntity(Entity entity)
+        {
+            entityMap.Remove(entity);
+        }
+
         public void UpdateVisibility(Vector2Int pos, int distance)
         {
             visibilityMap.CopyToTexturePrev();

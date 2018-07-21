@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Roguelike.Entities
 {
-    public class Character : MonoBehaviour
+    public class Character : EntityComponent
     {
         [SerializeField]
         private float moveSpeed = 1f;
@@ -20,14 +20,12 @@ namespace Roguelike.Entities
         private bool moving;
 
         private Fighter fighter;
-        private Entity entity;
 
         public int ViewDistance { get { return viewDistance; } }
 
         private void Awake()
         {
             fighter = GetComponent<Fighter>();
-            entity = GetComponent<Entity>();
             map = FindObjectOfType<GameMap>();
         }
 
@@ -50,7 +48,7 @@ namespace Roguelike.Entities
 
                     if (targetEntity == null)
                     {
-                        var path = map.FindPath(entity.Position, tile.Position, true);
+                        var path = map.FindPath(Entity.Position, tile.Position, true);
 
                         if (path.Length > 0)
                         {
@@ -82,6 +80,22 @@ namespace Roguelike.Entities
             }
 
             return state;
+        }
+
+        public MoveState PickItem(Item item)
+        {
+            MoveState moveState = new MoveState();
+
+            var inventory = GetComponent<Inventory>();
+
+            if (inventory != null)
+            {
+                var result = inventory.Add(item);
+                moveState.Results.Add(result);
+            }
+
+            moveState.Finished = true;
+            return moveState;
         }
 
         private void InteractWithEntity(Entity entity, MoveState state)
@@ -143,7 +157,7 @@ namespace Roguelike.Entities
             {
                 var pos = Vector2.Lerp(start, end, t);
 
-                entity.WorldPosition = pos;
+                Entity.WorldPosition = pos;
 
                 t += Time.deltaTime / moveTime;
                 yield return null;
