@@ -13,6 +13,7 @@ namespace Roguelike.Entities
 
         private List<Item> items;
         public Item[] Items { get { return items.ToArray(); } }
+        public int Capacity { get { return capacity; } }
 
         private void Awake()
         {

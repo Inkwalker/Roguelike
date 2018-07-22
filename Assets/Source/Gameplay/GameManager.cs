@@ -20,10 +20,13 @@ namespace Roguelike.Gameplay
         private Queue<BasicMonster> moveQueue;
         private MoveState activeMoveState;
 
+        private InventoryWindow inventoryWindow;
+
         private void Awake()
         {
             gameMap = FindObjectOfType<GameMap>();
             log = FindObjectOfType<MessageLog>();
+            inventoryWindow = FindObjectOfType<InventoryWindow>();
         }
 
         private void Start()
@@ -80,6 +83,18 @@ namespace Roguelike.Gameplay
             }
             else if (gameState == GameState.PlayerTurn)
             {
+                if (Input.GetKeyDown(KeyCode.I))
+                {
+                    if (inventoryWindow.gameObject.activeSelf)
+                    {
+                        inventoryWindow.Hide();
+                    }
+                    else
+                    {
+                        inventoryWindow.Show(player.GetComponent<Inventory>());
+                    }
+                }
+
                 //process player move results
                 if (activeMoveState != null)
                 {
