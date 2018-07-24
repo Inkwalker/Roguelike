@@ -27,6 +27,7 @@ namespace Roguelike.Gameplay
             gameMap = FindObjectOfType<GameMap>();
             log = FindObjectOfType<MessageLog>();
             inventoryWindow = FindObjectOfType<InventoryWindow>();
+            inventoryWindow.Hide();
         }
 
         private void Start()
