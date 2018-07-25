@@ -12,7 +12,7 @@ namespace Roguelike.Entities
         [SerializeField] int power;
 
         public int MaxHP { get { return maxHP; } }
-        public int HP { get; set; }
+        public int HP { get; private set; }
         public int Defense { get { return defense; } }
         public int Power { get { return power; } }
 
@@ -37,6 +37,18 @@ namespace Roguelike.Entities
                 }
 
                 return new IActionResult[] { new DeadActionResult(GetComponent<Entity>()) };
+            }
+
+            return new IActionResult[0];
+        }
+
+        public IActionResult[] Heal(int amount)
+        {
+            HP += amount;
+
+            if (HP > MaxHP)
+            {
+                HP = MaxHP;
             }
 
             return new IActionResult[0];
