@@ -46,26 +46,26 @@ namespace Roguelike.Entities
                 {
                     var targetEntity = map.GetBlockingEntity(tile.Position.x, tile.Position.y);
 
-                    if (targetEntity == null)
+                    var path = map.FindPath(Entity.Position, tile.Position, true);
+
+                    if (path.Length > 0)
                     {
-                        var path = map.FindPath(Entity.Position, tile.Position, true);
-
-                        if (path.Length > 0)
+                        List<Tile> p = new List<Tile>();
+                        for (int i = 0; i < distance + 1; i++)
                         {
-                            List<Tile> p = new List<Tile>();
-                            for (int i = 0; i < distance + 1; i++)
-                            {
-                                if (i >= path.Length) break;
+                            if (i >= path.Length) break;
 
-                                p.Add(path[i]);
-                            }
+                            p.Add(path[i]);
+                        }
 
+                        if (p.Count == 1 && targetEntity != null)
+                        {
+                            InteractWithEntity(targetEntity, state);
+                        }
+                        else
+                        {
                             StartCoroutine(MovePath(p.ToArray(), state));
                         }
-                    }
-                    else
-                    {
-                        InteractWithEntity(targetEntity, state);
                     }
                 }
                 else
