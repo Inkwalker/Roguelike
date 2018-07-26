@@ -46,5 +46,36 @@ namespace Roguelike.Entities
                 };
             }
         }
+
+        public bool Contains(Item item)
+        {
+            return items.Contains(item);
+        }
+
+        public void Remove(Item item)
+        {
+            items.Remove(item);
+        }
+
+        public IActionResult[] Use(Item item)
+        {
+            var results = item.Use(Entity);
+
+            foreach (var result in results)
+            {
+                if (result is UseItemActionResult)
+                {
+                    var useAction = result as UseItemActionResult;
+
+                    if(useAction.Consumed)
+                    {
+                        Remove(item);
+                        Destroy(item.gameObject);
+                    }
+                }
+            }
+
+            return results;
+        }
     }
 }

@@ -1,14 +1,18 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using Roguelike.Entities;
 
 namespace Roguelike.UI
 {
-    public class InventorySlot : MonoBehaviour
+    public class InventorySlot : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField]
         Transform itemParent;
 
         public Item Item { get; private set; }
+
+        public SlotEvent OnSelected;
 
         public void SetItem(Item item)
         {
@@ -19,5 +23,13 @@ namespace Roguelike.UI
 
             Item = item;
         }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (Item != null) OnSelected.Invoke(this);
+        }
+
+        [System.Serializable]
+        public class SlotEvent : UnityEvent<InventorySlot> { }
     }
 }

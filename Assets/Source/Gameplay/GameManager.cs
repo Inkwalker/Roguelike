@@ -26,8 +26,10 @@ namespace Roguelike.Gameplay
         {
             gameMap = FindObjectOfType<GameMap>();
             log = FindObjectOfType<MessageLog>();
+
             inventoryWindow = FindObjectOfType<InventoryWindow>();
             inventoryWindow.Hide();
+            inventoryWindow.ItemSelected.AddListener(OnInventoryItemSelected);
         }
 
         private void Start()
@@ -131,6 +133,23 @@ namespace Roguelike.Gameplay
             if (gameState == GameState.PlayerTurn)
             {
                 activeMoveState = player.PickItem(item);
+            }
+        }
+
+        public void OnInventoryItemSelected(Item item)
+        {
+            if (gameState == GameState.PlayerTurn)
+            {
+                var inventory = player.GetComponent<Inventory>();
+
+                if (inventory != null)
+                {
+                    activeMoveState = new MoveState();
+                    activeMoveState.Results.AddRange(inventory.Use(item));
+                    activeMoveState.Finished = true;
+                }
+
+                inventoryWindow.Hide();
             }
         }
 

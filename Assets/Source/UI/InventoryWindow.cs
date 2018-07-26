@@ -16,6 +16,8 @@ namespace Roguelike.UI
 
         Inventory currenInventory;
 
+        public InventoryWindowEvent ItemSelected;
+
         private void Awake()
         {
             grid = GetComponentInChildren<GridLayoutGroup>();
@@ -48,12 +50,14 @@ namespace Roguelike.UI
             {
                 var slot = Instantiate(slotPrefab, grid.transform);
 
-                slots.Add(slot);
+                slot.OnSelected.AddListener(OnItemSelected);
 
                 if (i < items.Length)
                 {
                     slot.SetItem(items[i]);
                 }
+
+                slots.Add(slot);
             }
 
             gameObject.SetActive(true);
@@ -73,6 +77,11 @@ namespace Roguelike.UI
             gameObject.SetActive(false);
         }
 
+        private void OnItemSelected(InventorySlot slot)
+        {
+            ItemSelected.Invoke(slot.Item);
+        }
+
         private void ReturnItems(Inventory inventory)
         {
             foreach (var slot in slots)
@@ -87,5 +96,8 @@ namespace Roguelike.UI
                 }
             }
         }
+
+        [System.Serializable]
+        public class InventoryWindowEvent : UnityEngine.Events.UnityEvent<Item> { }
     }
 }

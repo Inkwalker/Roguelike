@@ -11,20 +11,24 @@ namespace Roguelike
 
         private GameManager gameManager;
 
-        public MouseManager(GameManager gameManager)
-        {
-            this.gameManager = gameManager;
-        }
+        private MouseClickDetector leftMouseButton;
 
         private void Awake()
         {
+            leftMouseButton = new MouseClickDetector(0);
+            leftMouseButton.onButtonDown += OnClick;
+
             gameManager = FindObjectOfType<GameManager>();
         }
 
         private void Update()
         {
-            //left mouse click
-            if (Input.GetMouseButtonDown(0))
+            leftMouseButton.Update();
+        }
+
+        private void OnClick(MouseClickDetector mouseButton)
+        {
+            if (mouseButton == leftMouseButton)
             {
                 Vector3 mp = Input.mousePosition;
                 Ray mouseRay = camera.ScreenPointToRay(mp);
