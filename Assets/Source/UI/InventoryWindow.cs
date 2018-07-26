@@ -14,8 +14,6 @@ namespace Roguelike.UI
         GridLayoutGroup grid;
         List<InventorySlot> slots;
 
-        Inventory currenInventory;
-
         public InventoryWindowEvent ItemSelected;
 
         private void Awake()
@@ -33,16 +31,12 @@ namespace Roguelike.UI
 
         public void Show(Inventory inventory)
         {
-            ReturnItems(currenInventory);
-
             foreach (var slot in slots)
             {
                 Destroy(slot.gameObject);
             }
 
             slots.Clear();
-
-            currenInventory = inventory;
 
             var items = inventory.Items;
 
@@ -65,8 +59,6 @@ namespace Roguelike.UI
 
         public void Hide()
         {
-            ReturnItems(currenInventory);
-
             foreach (var slot in slots)
             {
                 Destroy(slot.gameObject);
@@ -80,21 +72,6 @@ namespace Roguelike.UI
         private void OnItemSelected(InventorySlot slot)
         {
             ItemSelected.Invoke(slot.Item);
-        }
-
-        private void ReturnItems(Inventory inventory)
-        {
-            foreach (var slot in slots)
-            {
-                var item = slot.Item;
-
-                if (item != null)
-                {
-                    item.transform.parent = inventory.transform;
-                    item.transform.localPosition = Vector3.zero;
-                    item.gameObject.SetActive(false);
-                }
-            }
         }
 
         [System.Serializable]

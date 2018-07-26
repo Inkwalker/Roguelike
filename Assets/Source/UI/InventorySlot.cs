@@ -7,19 +7,23 @@ namespace Roguelike.UI
 {
     public class InventorySlot : MonoBehaviour, IPointerClickHandler
     {
-        [SerializeField]
-        Transform itemParent;
+        [SerializeField] float rotationSpeed = 10f;
+        [SerializeField] Transform itemParent;
 
         public Item Item { get; private set; }
 
         public SlotEvent OnSelected;
 
+        private void Update()
+        {
+            itemParent.transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime, Space.Self);
+        }
+
         public void SetItem(Item item)
         {
-            item.transform.parent = itemParent;
-            item.transform.localPosition = Vector3.zero;
+            var icon = Instantiate(item.Icon, itemParent);
 
-            item.gameObject.SetActive(true);
+            icon.transform.localPosition = Vector3.zero;
 
             Item = item;
         }

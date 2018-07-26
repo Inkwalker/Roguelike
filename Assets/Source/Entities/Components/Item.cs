@@ -6,6 +6,9 @@ namespace Roguelike.Entities
 {
     public class Item : EntityComponent
     {
+        [SerializeField] private GameObject icon;
+        public GameObject Icon { get { return icon; } }
+
         public IActionResult[] Use(Entity target)
         {
             var results = new List<IActionResult>();
