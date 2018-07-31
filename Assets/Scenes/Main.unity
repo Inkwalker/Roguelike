@@ -1876,6 +1876,11 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Roguelike.UI.InventoryWindow+InventoryWindowEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  ItemDropped:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Roguelike.UI.InventoryWindow+InventoryWindowEvent, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!224 &1182713002 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224595379124542916, guid: b7ad1bde1fb7f864cb53eeda1404e322,

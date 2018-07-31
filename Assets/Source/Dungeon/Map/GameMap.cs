@@ -108,6 +108,11 @@ namespace Roguelike.Dungeon
             return entityMap.GetBlocking(new Vector2Int(x, y));
         }
 
+        public void AddEntity(Entity entity)
+        {
+            entityMap.Add(entity);
+        }
+
         public void RemoveEntity(Entity entity)
         {
             entityMap.Remove(entity);

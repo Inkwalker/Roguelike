@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 132ec09b1e9ba034b9bb281a398a7063, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 10
+  rotationSpeed: 20
   itemParent: {fileID: 4639640686216114}
   OnSelected:
     m_PersistentCalls:

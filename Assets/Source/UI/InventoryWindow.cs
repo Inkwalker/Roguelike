@@ -15,6 +15,7 @@ namespace Roguelike.UI
         List<InventorySlot> slots;
 
         public InventoryWindowEvent ItemSelected;
+        public InventoryWindowEvent ItemDropped;
 
         private void Awake()
         {
@@ -71,7 +72,14 @@ namespace Roguelike.UI
 
         private void OnItemSelected(InventorySlot slot)
         {
-            ItemSelected.Invoke(slot.Item);
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                ItemDropped.Invoke(slot.Item);
+            }
+            else
+            {
+                ItemSelected.Invoke(slot.Item);
+            }
         }
 
         [System.Serializable]

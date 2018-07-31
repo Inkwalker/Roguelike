@@ -77,5 +77,22 @@ namespace Roguelike.Entities
 
             return results;
         }
+
+        public IActionResult[] Drop(Item item)
+        {
+            Remove(item);
+
+            item.transform.parent = null;
+            item.Entity.Position = Entity.Position;
+
+            map.AddEntity(item.Entity);
+
+            item.gameObject.SetActive(true);
+
+            return new IActionResult[]
+            {
+                new DropItemActionResult() { Item = item, Message = string.Format("You dropped the {0}", item.Entity.DisplayName) }
+            };
+        }
     }
 }

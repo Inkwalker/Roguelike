@@ -30,6 +30,7 @@ namespace Roguelike.Gameplay
             inventoryWindow = FindObjectOfType<InventoryWindow>();
             inventoryWindow.Hide();
             inventoryWindow.ItemSelected.AddListener(OnInventoryItemSelected);
+            inventoryWindow.ItemDropped.AddListener(OnInventoryItemDropped);
         }
 
         private void Start()
@@ -151,6 +152,24 @@ namespace Roguelike.Gameplay
 
                 inventoryWindow.Hide();
             }
+        }
+
+        public void OnInventoryItemDropped(Item item)
+        {
+            if (gameState == GameState.PlayerTurn)
+            {
+                var inventory = player.GetComponent<Inventory>();
+
+                if (inventory != null)
+                {
+                    activeMoveState = new MoveState();
+                    activeMoveState.Results.AddRange(inventory.Drop(item));
+                    activeMoveState.Finished = true;
+                }
+
+                inventoryWindow.Hide();
+            }
+
         }
 
         private enum GameState
