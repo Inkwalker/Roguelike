@@ -32,6 +32,8 @@ namespace Roguelike.UI
 
         public void Show(Inventory inventory)
         {
+            gameObject.SetActive(true);
+
             foreach (var slot in slots)
             {
                 Destroy(slot.gameObject);
@@ -54,18 +56,19 @@ namespace Roguelike.UI
 
                 slots.Add(slot);
             }
-
-            gameObject.SetActive(true);
         }
 
         public void Hide()
         {
-            foreach (var slot in slots)
+            if (slots != null)
             {
-                Destroy(slot.gameObject);
-            }
+                foreach (var slot in slots)
+                {
+                    Destroy(slot.gameObject);
+                }
 
-            slots.Clear();
+                slots.Clear();
+            }
 
             gameObject.SetActive(false);
         }

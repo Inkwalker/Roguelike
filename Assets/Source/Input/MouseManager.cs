@@ -2,6 +2,7 @@
 using Roguelike.Entities;
 using Roguelike.Gameplay;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Roguelike
 {
@@ -9,16 +10,15 @@ namespace Roguelike
     {
         [SerializeField] new Camera camera;
 
-        private GameManager gameManager;
-
         private MouseClickDetector leftMouseButton;
+
+        public TileSelectedEvent TileSelected;
+        public EntitySelectedEvent EntitySelected;
 
         private void Awake()
         {
             leftMouseButton = new MouseClickDetector(0);
             leftMouseButton.onButtonDown += OnClick;
-
-            gameManager = FindObjectOfType<GameManager>();
         }
 
         private void Update()
@@ -40,16 +40,21 @@ namespace Roguelike
 
                     if (tile != null)
                     {
-                        gameManager.OnTileSelected(tile);
+                        TileSelected.Invoke(tile);
                     }
 
-                    var item = raycastHit.collider.gameObject.GetComponent<Item>();
-                    if (item != null)
+                    var entity = raycastHit.collider.gameObject.GetComponent<Entity>();
+                    if (entity != null)
                     {
-                        gameManager.OnItemSelected(item);
+                        EntitySelected.Invoke(entity);
                     }
                 }
             }
         }
+
+        [System.Serializable]
+        public class TileSelectedEvent : UnityEvent<Tile> { }
+        [System.Serializable]
+        public class EntitySelectedEvent : UnityEvent<Entity> { }
     }
 }
