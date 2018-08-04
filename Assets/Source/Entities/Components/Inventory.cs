@@ -57,9 +57,9 @@ namespace Roguelike.Entities
             items.Remove(item);
         }
 
-        public IActionResult[] Use(Item item)
+        public IActionResult[] Use(Item item, Entity target)
         {
-            var results = item.Use(Entity);
+            var results = item.Use(target);
 
             foreach (var result in results)
             {

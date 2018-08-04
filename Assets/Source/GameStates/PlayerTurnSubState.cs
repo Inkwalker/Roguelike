@@ -8,6 +8,8 @@ namespace Roguelike.GameStates
 {
     public class PlayerTurnSubState : GameSubState
     {
+        [SerializeField] TargetingSubState targetingSubState;
+
         private InventoryWindow inventoryWindow;
 
         private PlayerController player;
@@ -17,6 +19,7 @@ namespace Roguelike.GameStates
         private MessageLog log;
 
         private MoveState activeMoveState;
+        private Item selectedItem;
 
         private void Awake()
         {
@@ -39,6 +42,8 @@ namespace Roguelike.GameStates
 
             inventoryWindow.ItemSelected.AddListener(OnInventoryItemSelected);
             inventoryWindow.ItemDropped.AddListener(OnInventoryItemDropped);
+
+            targetingSubState.TargetSelected.AddListener(OnTargetSelected);
         }
 
         public override void Deactivate()
@@ -49,7 +54,10 @@ namespace Roguelike.GameStates
             inventoryWindow.ItemSelected.RemoveListener(OnInventoryItemSelected);
             inventoryWindow.ItemDropped.RemoveListener(OnInventoryItemDropped);
 
+            targetingSubState.TargetSelected.RemoveListener(OnTargetSelected);
+
             inventoryWindow.Hide();
+            targetingSubState.Deactivate();
 
             base.Deactivate();
         }
@@ -94,7 +102,7 @@ namespace Roguelike.GameStates
 
         private void OnTileSelected(Tile tile)
         {
-            if (gameObject.activeSelf)
+            if (targetingSubState.Active == false)
             {
                 activeMoveState = player.MoveTo(tile);
             }
@@ -102,7 +110,7 @@ namespace Roguelike.GameStates
 
         private void OnEntitySelected(Entity entity)
         {
-            if (gameObject.activeSelf)
+            if (targetingSubState.Active == false)
             {
                 var item = entity.GetComponent<Item>();
 
@@ -115,30 +123,63 @@ namespace Roguelike.GameStates
 
         private void OnInventoryItemSelected(Item item)
         {
-            var inventory = player.GetComponent<Inventory>();
-
-            if (inventory != null)
+            if (targetingSubState.Active == false)
             {
-                activeMoveState = new MoveState();
-                activeMoveState.Results.AddRange(inventory.Use(item));
-                activeMoveState.Finished = true;
-            }
+                var inventory = player.GetComponent<Inventory>();
 
-            inventoryWindow.Hide();
+                if (inventory != null)
+                {
+                    if (item.Targeting == Item.TargetMode.Self)
+                    {
+                        activeMoveState = new MoveState();
+                        activeMoveState.Results.AddRange(inventory.Use(item, player.GetComponent<Entity>()));
+                        activeMoveState.Finished = true;
+                    }
+                    else
+                    {
+                        selectedItem = item;
+                        targetingSubState.Activate();
+                    }
+                }
+
+                inventoryWindow.Hide();
+            }
         }
 
         private void OnInventoryItemDropped(Item item)
         {
-            var inventory = player.GetComponent<Inventory>();
-
-            if (inventory != null)
+            if (targetingSubState.Active == false)
             {
-                activeMoveState = new MoveState();
-                activeMoveState.Results.AddRange(inventory.Drop(item));
-                activeMoveState.Finished = true;
+                var inventory = player.GetComponent<Inventory>();
+
+                if (inventory != null)
+                {
+                    activeMoveState = new MoveState();
+                    activeMoveState.Results.AddRange(inventory.Drop(item));
+                    activeMoveState.Finished = true;
+                }
+
+                inventoryWindow.Hide();
+            }
+        }
+
+        private void OnTargetSelected(Tile target)
+        {
+            if (target != null && selectedItem != null)
+            {
+                var inventory = player.GetComponent<Inventory>();
+
+                var entity = gameMap.GetBlockingEntity(target.Position.x, target.Position.y);
+
+                if (entity != null)
+                {
+                    activeMoveState = new MoveState();
+                    activeMoveState.Results.AddRange(inventory.Use(selectedItem, entity));
+                    activeMoveState.Finished = true;
+                }
             }
 
-            inventoryWindow.Hide();
+            selectedItem = null;
         }
     }
 }

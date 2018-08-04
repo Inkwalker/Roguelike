@@ -240,6 +240,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 1254341425103634, guid: 5ee169f9c2168a54992b484351abbda4, type: 2}
+  targeting: 1
+  targetingMessage: 
 --- !u!114 &114863316585657802
 MonoBehaviour:
   m_ObjectHideFlags: 1

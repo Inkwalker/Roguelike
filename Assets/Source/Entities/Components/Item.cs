@@ -6,8 +6,14 @@ namespace Roguelike.Entities
 {
     public class Item : EntityComponent
     {
-        [SerializeField] private GameObject icon;
+        [SerializeField] GameObject icon;
         public GameObject Icon { get { return icon; } }
+
+        [SerializeField] TargetMode targeting;
+        public TargetMode Targeting { get { return targeting; } }
+
+        [SerializeField] string targetingMessage;
+        public string TargetingMessage { get { return targetingMessage; } }
 
         public IActionResult[] Use(Entity target)
         {
@@ -30,6 +36,12 @@ namespace Roguelike.Entities
             }
 
             return results.ToArray();
+        }
+
+        public enum TargetMode
+        {
+            Self,
+            Target
         }
     }
 }
