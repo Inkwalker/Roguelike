@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Roguelike.Utils;
+using UnityEngine;
 
 namespace Roguelike.Dungeon
 {
@@ -33,6 +34,8 @@ namespace Roguelike.Dungeon
 
         public void Set(int x, int y, VisibilityState state)
         {
+            if (ArrayHelper.InBounds(data, x, y) == false) return;
+
             data[x, y] = state;
 
             Color color = Color.black;
@@ -67,6 +70,8 @@ namespace Roguelike.Dungeon
 
         public VisibilityState Get(int x, int y)
         {
+            if (ArrayHelper.InBounds(data, x, y) == false) return VisibilityState.Invisible;
+
             return data[x, y];
         }
 
