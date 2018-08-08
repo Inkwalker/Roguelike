@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using Roguelike.Actions;
 using Roguelike.Dungeon;
+using Roguelike.LoadSave;
 
 namespace Roguelike.Entities
 {
-    public class Inventory : EntityComponent
+    public class Inventory : AEntityComponent
     {
         [SerializeField] int capacity = 16;
 
@@ -93,6 +94,11 @@ namespace Roguelike.Entities
             {
                 new DropItemActionResult() { Item = item, Message = string.Format("You dropped the {0}", item.Entity.DisplayName) }
             };
+        }
+
+        public override AEntityComponentData GetData()
+        {
+            return null; //TODO
         }
     }
 }

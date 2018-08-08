@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using Roguelike.LoadSave;
+using UnityEngine;
 
 namespace Roguelike.Entities
 {
-    public class EntityComponent : MonoBehaviour
+    public abstract class AEntityComponent : MonoBehaviour
     {
         private Entity entity;
 
@@ -16,5 +17,7 @@ namespace Roguelike.Entities
                 return entity;
             }
         }
+
+        public abstract AEntityComponentData GetData();
     }
 }

@@ -56,6 +56,24 @@ namespace Roguelike.Dungeon
             return entities[position.x, position.y].ToArray();
         }
 
+        public Entity[] GetAll()
+        {
+            var result = new List<Entity>();
+
+            for (int x = 0; x < entities.GetLength(0); x++)
+            {
+                for (int y = 0; y < entities.GetLength(1); y++)
+                {
+                    if (entities[x, y] != null)
+                    {
+                        result.AddRange(entities[x, y]);
+                    }
+                }
+            }
+
+            return result.ToArray();
+        }
+
         public Entity GetBlocking(Vector2Int position)
         {
             if (entities[position.x, position.y] == null) return null;

@@ -2,10 +2,11 @@
 using System.Collections;
 using Roguelike.Actions;
 using System.Collections.Generic;
+using Roguelike.LoadSave;
 
 namespace Roguelike.Entities
 {
-    public class Fighter : EntityComponent
+    public class Fighter : AEntityComponent
     {
         [SerializeField] int maxHP;
         [SerializeField] int defense;
@@ -79,6 +80,11 @@ namespace Roguelike.Entities
             }
 
             return results.ToArray();
+        }
+
+        public override AEntityComponentData GetData()
+        {
+            return new FighterComponentData() { HP = this.HP };
         }
     }
 }

@@ -4,6 +4,7 @@ using Autotiles;
 using Roguelike.Pathfinding;
 using Roguelike.Entities;
 using Roguelike.Dungeon.Generator;
+using Roguelike.LoadSave;
 
 namespace Roguelike.Dungeon
 {
@@ -86,6 +87,40 @@ namespace Roguelike.Dungeon
             RecalulatePathfinding();
         }
 
+        public GameMapData GetMapData()
+        {
+            GameMapData data = new GameMapData(Width, Height);
+
+            for (int x = 0; x < Width; x++)
+            {
+                for (int y = 0; y < Height; y++)
+                {
+                    int tile = tilemap.GetTile(x, y) == floorBrush ? 0 : 1;
+
+                    data.Set(x, y, tile);
+                }
+            }
+
+            return data;
+        }
+
+        public VisibilityMapData GetVisibilityData()
+        {
+            VisibilityMapData data = new VisibilityMapData(Width, Height);
+
+            for (int x = 0; x < Width; x++)
+            {
+                for (int y = 0; y < Height; y++)
+                {
+                    data.Set(x, y,
+                        visibilityMap.Get(x, y) == VisibilityMap.VisibilityState.Explored ||
+                        visibilityMap.Get(x, y) == VisibilityMap.VisibilityState.Visible);
+                }
+            }
+
+            return data;
+        }
+
         public Tile GetTile(int x, int y)
         {
             if (x < 0 || x >= Width || y < 0 || y >= Height) return null;
@@ -106,6 +141,11 @@ namespace Roguelike.Dungeon
         public Entity GetBlockingEntity(int x, int y)
         {
             return entityMap.GetBlocking(new Vector2Int(x, y));
+        }
+
+        public Entity[] GetAllEntities()
+        {
+            return entityMap.GetAll();
         }
 
         public void AddEntity(Entity entity)

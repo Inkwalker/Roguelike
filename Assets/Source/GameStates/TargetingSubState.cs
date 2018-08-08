@@ -31,8 +31,11 @@ namespace Roguelike.GameStates
 
         public override void Deactivate()
         {
-            mouseManager.TileSelected.RemoveListener(OnTileSelected);
-            mouseManager.EntitySelected.RemoveListener(OnEntitySelected);
+            if (mouseManager != null)
+            {
+                mouseManager.TileSelected.RemoveListener(OnTileSelected);
+                mouseManager.EntitySelected.RemoveListener(OnEntitySelected);
+            }
 
             targetingMessage.SetActive(false);
 

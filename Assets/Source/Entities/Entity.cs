@@ -1,8 +1,8 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using Roguelike.Dungeon;
+using Roguelike.LoadSave;
 using System;
+using UnityEngine;
 using UnityEngine.Events;
-using Roguelike.Dungeon;
 
 namespace Roguelike.Entities
 {
@@ -68,6 +68,27 @@ namespace Roguelike.Entities
 
         public EntityEvent Moving;
         public EntityEvent Moved;
+
+        public EntityData GetData()
+        {
+            EntityData data = new EntityData();
+
+            data.Position = Position;
+
+            var components = GetComponents<AEntityComponent>();
+
+            foreach (var component in components)
+            {
+                var cData = component.GetData();
+
+                if (cData != null)
+                {
+                    data.AddComponentData(cData);
+                }
+            }
+
+            return data;
+        }
 
         [Serializable]
         public class EntityEvent : UnityEvent<Entity> { }

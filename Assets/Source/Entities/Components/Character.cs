@@ -1,13 +1,14 @@
 ﻿using Roguelike.Actions;
 using Roguelike.Dungeon;
 using Roguelike.Gameplay;
+using Roguelike.LoadSave;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Roguelike.Entities
 {
-    public class Character : EntityComponent
+    public class Character : AEntityComponent
     {
         [SerializeField]
         private float moveSpeed = 1f;
@@ -96,6 +97,11 @@ namespace Roguelike.Entities
 
             moveState.Finished = true;
             return moveState;
+        }
+
+        public override AEntityComponentData GetData()
+        {
+            return null;
         }
 
         private void InteractWithEntity(Entity entity, MoveState state)

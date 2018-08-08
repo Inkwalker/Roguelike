@@ -1,10 +1,11 @@
 ﻿using Roguelike.Actions;
+using Roguelike.LoadSave;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Roguelike.Entities
 {
-    public class Item : EntityComponent
+    public class Item : AEntityComponent
     {
         [SerializeField] GameObject icon;
         public GameObject Icon { get { return icon; } }
@@ -36,6 +37,11 @@ namespace Roguelike.Entities
             }
 
             return results.ToArray();
+        }
+
+        public override AEntityComponentData GetData()
+        {
+            return null;
         }
 
         public enum TargetMode
