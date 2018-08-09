@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Roguelike.Dungeon;
 using Roguelike.LoadSave;
+using Roguelike.Dungeon.Generator;
 
 namespace Roguelike.GameStates
 {
@@ -8,6 +9,8 @@ namespace Roguelike.GameStates
     {
         [SerializeField] GameSubState enemyTurnState;
         [SerializeField] GameSubState playerTurnState;
+
+        [SerializeField] DungeonLevelSettings generatorSettings;
 
         private GameMap gameMap;
 
@@ -24,7 +27,13 @@ namespace Roguelike.GameStates
 
         private void Start()
         {
-            gameMap.CreateMap();
+            var dungeonData = DungeonGenerator.Generate(generatorSettings);
+
+            var mapData = dungeonData.GetGameMapData();
+            var entitiesData = dungeonData.GetEntitiesData();
+
+            gameMap.CreateMap(mapData);
+            gameMap.CreateEntities(entitiesData);
         }
 
         private void OnEnable()
@@ -62,8 +71,8 @@ namespace Roguelike.GameStates
                 var storage = new GameSaveStorage();
                 var slot = storage.Read();
 
-                Debug.Log(slot.entities[0].Position);
-                Debug.Log(slot.entities[0].GetComponentData<FighterComponentData>().HP);
+                gameMap.CreateMap(slot.mapData);
+                gameMap.CreateEntities(slot.entities);
             }
         }
 

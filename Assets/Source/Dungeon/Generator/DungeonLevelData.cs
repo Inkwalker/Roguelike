@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Roguelike.LoadSave;
 
 namespace Roguelike.Dungeon.Generator
 {
@@ -19,6 +20,39 @@ namespace Roguelike.Dungeon.Generator
             entities = new List<DungeonEntityData>();
 
             floor = new bool[width, height];
+        }
+
+        public GameMapData GetGameMapData()
+        {
+            var data = new GameMapData(Width, Height);
+
+            for (int x = 0; x < Width; x++)
+            {
+                for (int y = 0; y < Height; y++)
+                {
+                    int tileIndex = floor[x, y] ? 0 : 1; //TODO: add proper indices and tilesets.
+
+                    data.Set(x, y, tileIndex);
+                }
+            }
+
+            return data;
+        }
+
+        public List<EntityInstanceData> GetEntitiesData()
+        {
+            var result = new List<EntityInstanceData>();
+
+            foreach (var entity in entities)
+            {
+                var instanceData = new EntityInstanceData(entity.prefab.PrefabID);
+
+                instanceData.Position = new Vector2Int(entity.x, entity.y);
+
+                result.Add(instanceData);
+            }
+
+            return result;
         }
     }
 }

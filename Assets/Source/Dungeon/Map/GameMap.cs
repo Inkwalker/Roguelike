@@ -5,6 +5,7 @@ using Roguelike.Pathfinding;
 using Roguelike.Entities;
 using Roguelike.Dungeon.Generator;
 using Roguelike.LoadSave;
+using System.Collections.Generic;
 
 namespace Roguelike.Dungeon
 {
@@ -12,13 +13,13 @@ namespace Roguelike.Dungeon
     {
         public static readonly float TileSize = 2f;
 
-        [SerializeField] Vector2Int size;
         [SerializeField] Brush wallBrush;
         [SerializeField] Brush floorBrush;
         [SerializeField] Material fovMaterial;
 
         [SerializeField] DungeonLevelSettings levelSettings;
 
+        private Vector2Int size;
         private Tile[,] tiles;
         private EntityMap entityMap;
         private Tilemap tilemap;
@@ -30,29 +31,31 @@ namespace Roguelike.Dungeon
 
         private void Awake()
         {
+            tilemap = GetComponent<Tilemap>();
+        }
+
+        public void CreateMap(GameMapData data)
+        {
+            size = new Vector2Int(data.Width, data.Height);
+
+            tilemap.Resize(size.x, size.y);
+
             tiles = new Tile[size.x, size.y];
             visibilityMap = new VisibilityMap(size.x, size.y);
+
+            DestroyEntites();
             entityMap = new EntityMap(size.x, size.y);
 
             fovMaterial.SetVector("_FogSize", new Vector4(Width * TileSize, Height * TileSize, 0, 0));
             fovMaterial.SetTexture("_FogMapA", visibilityMap.texturePrev);
             fovMaterial.SetTexture("_FogMapB", visibilityMap.textureCur);
 
-            tilemap = GetComponent<Tilemap>();
-        }
-
-        public void CreateMap()
-        {
-            tilemap.Resize(size.x, size.y);
-
-            var dungeon = DungeonGenerator.Generate(levelSettings);
-
             //create tiles
             for (int x = 0; x < size.x; x++)
             {
                 for (int y = 0; y < size.y; y++)
                 {
-                    var brush = dungeon.floor[x, y] ? floorBrush : wallBrush;
+                    var brush = data.Get(x, y) == 0 ? floorBrush : wallBrush;
 
                     tilemap.SetTile(x, y, brush);
                 }
@@ -66,25 +69,32 @@ namespace Roguelike.Dungeon
                 }
             }
 
-            //create etities
-            for (int i = 0; i < dungeon.entities.Count; i++)
-            {
-                var entity = Instantiate(dungeon.entities[i].prefab);
-
-                entity.Position = new Vector2Int(dungeon.entities[i].x, dungeon.entities[i].y);
-
-                entityMap.Add(entity);
-            }
-
             //setup the character
-            var character = FindObjectOfType<PlayerController>();
-            var ce = character.GetComponent<Entity>();
-            ce.Position = dungeon.playerPosition;
-            entityMap.Add(ce);
+            //var character = FindObjectOfType<PlayerController>();
+            //var ce = character.GetComponent<Entity>();
+            //ce.Position = dungeon.playerPosition;
+            //entityMap.Add(ce);
 
             pathfindingNodes = new TileGridNodes(this);
 
             RecalulatePathfinding();
+        }
+
+        public void CreateEntities(List<EntityInstanceData> entities)
+        {
+            DestroyEntites();
+
+            var entityDatabase = FindObjectOfType<EntityDatabase>();
+
+            foreach (var entityData in entities)
+            {
+                var prefab = entityDatabase.GetPrefab(entityData.PrefabID);
+                var entity = Instantiate(prefab);
+
+                entity.SetData(entityData);
+
+                entityMap.Add(entity);
+            }
         }
 
         public GameMapData GetMapData()
@@ -225,6 +235,20 @@ namespace Roguelike.Dungeon
             }
 
             fovMaterial.SetFloat("_FogMapBlend", 1);
+        }
+
+        private void DestroyEntites()
+        {
+            if (entityMap != null)
+            {
+                var oldInstances = entityMap.GetAll();
+
+                foreach (var item in oldInstances)
+                {
+                    entityMap.Remove(item);
+                    Destroy(item.gameObject);
+                }
+            }
         }
 
         private void OnDrawGizmos()

@@ -44,6 +44,10 @@ namespace Roguelike.Entities
             return null;
         }
 
+        public override void SetData(EntityInstanceData data)
+        {
+        }
+
         public enum TargetMode
         {
             Self,

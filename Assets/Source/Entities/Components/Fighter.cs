@@ -86,5 +86,15 @@ namespace Roguelike.Entities
         {
             return new FighterComponentData() { HP = this.HP };
         }
+
+        public override void SetData(EntityInstanceData data)
+        {
+            var fighterData = data.GetComponentData<FighterComponentData>();
+
+            if (fighterData != null)
+            {
+                HP = fighterData.HP;
+            }
+        }
     }
 }

@@ -240,6 +240,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 1254341425103634, guid: 715b260847d78b147b56a33c6fd34f84, type: 2}
+  targeting: 0
+  targetingMessage: 
 --- !u!114 &114497958662750582
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -264,6 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f614be5e5490e414e977cbb600691bdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefabID: Scroll_Lightning
   displayName: Lightning Scroll
   blocks: 0
   Moving:

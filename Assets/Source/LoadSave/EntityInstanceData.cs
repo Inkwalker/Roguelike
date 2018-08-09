@@ -5,11 +5,17 @@ using System;
 namespace Roguelike.LoadSave
 {
     [Serializable]
-    public class EntityData
+    public class EntityInstanceData
     {
+        private string prefabID;
         private int positionX;
         private int positionY;
         private List<AEntityComponentData> components;
+
+        public string PrefabID
+        {
+            get { return prefabID; }
+        }
 
         public Vector2Int Position
         {
@@ -24,8 +30,10 @@ namespace Roguelike.LoadSave
             }
         }
 
-        public EntityData()
+        public EntityInstanceData(string prefabID)
         {
+            this.prefabID = prefabID;
+
             components = new List<AEntityComponentData>();
         }
 

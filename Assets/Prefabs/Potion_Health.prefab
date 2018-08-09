@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 114866504426112976}
   - component: {fileID: 114230633995146690}
   m_Layer: 0
-  m_Name: Potion
+  m_Name: Potion_Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f614be5e5490e414e977cbb600691bdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefabID: Potion_Health
   displayName: Healing Potion
   blocks: 0
   Moving:
@@ -175,3 +176,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 1791492578331762, guid: 4852f147233645c4780fbee869c02c59, type: 2}
+  targeting: 0
+  targetingMessage: 

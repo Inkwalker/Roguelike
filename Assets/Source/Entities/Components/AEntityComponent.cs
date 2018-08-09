@@ -19,5 +19,6 @@ namespace Roguelike.Entities
         }
 
         public abstract AEntityComponentData GetData();
+        public abstract void SetData(EntityInstanceData data);
     }
 }

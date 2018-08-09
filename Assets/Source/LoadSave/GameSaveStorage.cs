@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -14,8 +13,6 @@ namespace Roguelike.LoadSave
 
         public void Write(GameSaveSlot gameSave)
         {
-            var json = JsonUtility.ToJson(gameSave, false);
-
             using (var file = OpenFile("Save/slot_0.sav"))
             {
                 if (file.Length > 0)

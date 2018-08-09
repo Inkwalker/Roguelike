@@ -104,6 +104,10 @@ namespace Roguelike.Entities
             return null;
         }
 
+        public override void SetData(EntityInstanceData data)
+        {
+        }
+
         private void InteractWithEntity(Entity entity, MoveState state)
         {
             var fighter = GetComponent<Fighter>();

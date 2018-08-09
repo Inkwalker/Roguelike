@@ -8,12 +8,14 @@ namespace Roguelike.Entities
 {
     public class Entity : MonoBehaviour
     {
+        [SerializeField] string prefabID = "null";
         [SerializeField] string displayName = "Thing";
         [SerializeField] bool blocks;
 
         private Vector2 worldPosition;
         private Vector2Int position;
 
+        public string PrefabID { get { return prefabID; } }
         public string DisplayName { get { return displayName; } }
         public bool Blocks { get { return blocks; } }
 
@@ -69,9 +71,9 @@ namespace Roguelike.Entities
         public EntityEvent Moving;
         public EntityEvent Moved;
 
-        public EntityData GetData()
+        public EntityInstanceData GetData()
         {
-            EntityData data = new EntityData();
+            EntityInstanceData data = new EntityInstanceData(prefabID);
 
             data.Position = Position;
 
@@ -88,6 +90,18 @@ namespace Roguelike.Entities
             }
 
             return data;
+        }
+
+        public void SetData(EntityInstanceData data)
+        {
+            Position = data.Position;
+
+            var components = GetComponents<AEntityComponent>();
+
+            foreach (var component in components)
+            {
+                component.SetData(data);
+            }
         }
 
         [Serializable]

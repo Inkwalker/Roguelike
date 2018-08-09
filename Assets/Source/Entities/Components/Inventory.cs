@@ -100,5 +100,10 @@ namespace Roguelike.Entities
         {
             return null; //TODO
         }
+
+        public override void SetData(EntityInstanceData data)
+        {
+            //TODO
+        }
     }
 }

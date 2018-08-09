@@ -431,7 +431,7 @@ GameObject:
   - component: {fileID: 114821486130761476}
   - component: {fileID: 114520035626377772}
   m_Layer: 0
-  m_Name: Troll
+  m_Name: Enemy_Troll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -982,18 +982,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f614be5e5490e414e977cbb600691bdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefabID: Enemy_Troll
   displayName: Troll
   blocks: 1
   Moving:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Roguelike.Entity+EntityEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: Roguelike.Entities.Entity+EntityEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   Moved:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Roguelike.Entity+EntityEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: Roguelike.Entities.Entity+EntityEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!137 &137367078350196978
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

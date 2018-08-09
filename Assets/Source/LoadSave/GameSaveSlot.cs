@@ -9,11 +9,11 @@ namespace Roguelike.LoadSave
     {
         public GameMapData mapData;
         public VisibilityMapData visibilityData;
-        public List<EntityData> entities;
+        public List<EntityInstanceData> entities;
 
         public GameSaveSlot()
         {
-            entities = new List<EntityData>();
+            entities = new List<EntityInstanceData>();
         }
     }
 }
