@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System;
-using System.Collections.Generic;
+﻿using System;
 
 namespace Roguelike.LoadSave
 {
@@ -9,11 +7,6 @@ namespace Roguelike.LoadSave
     {
         public GameMapData mapData;
         public VisibilityMapData visibilityData;
-        public List<EntityInstanceData> entities;
-
-        public GameSaveSlot()
-        {
-            entities = new List<EntityInstanceData>();
-        }
+        public EntitiesData entities;
     }
 }

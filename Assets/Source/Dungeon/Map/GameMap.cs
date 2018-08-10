@@ -80,23 +80,6 @@ namespace Roguelike.Dungeon
             RecalulatePathfinding();
         }
 
-        public void CreateEntities(List<EntityInstanceData> entities)
-        {
-            DestroyEntites();
-
-            var entityDatabase = FindObjectOfType<EntityDatabase>();
-
-            foreach (var entityData in entities)
-            {
-                var prefab = entityDatabase.GetPrefab(entityData.PrefabID);
-                var entity = Instantiate(prefab);
-
-                entity.SetData(entityData);
-
-                entityMap.Add(entity);
-            }
-        }
-
         public GameMapData GetMapData()
         {
             GameMapData data = new GameMapData(Width, Height);
@@ -239,12 +222,15 @@ namespace Roguelike.Dungeon
 
         private void DestroyEntites()
         {
+            var database = FindObjectOfType<EntityDatabase>();
+
             if (entityMap != null)
             {
                 var oldInstances = entityMap.GetAll();
 
                 foreach (var item in oldInstances)
                 {
+                    database.RemoveInstance(item);
                     entityMap.Remove(item);
                     Destroy(item.gameObject);
                 }

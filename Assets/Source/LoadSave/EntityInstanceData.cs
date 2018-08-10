@@ -7,6 +7,7 @@ namespace Roguelike.LoadSave
     [Serializable]
     public class EntityInstanceData
     {
+        private string instanceID;
         private string prefabID;
         private int positionX;
         private int positionY;
@@ -15,6 +16,14 @@ namespace Roguelike.LoadSave
         public string PrefabID
         {
             get { return prefabID; }
+        }
+
+        public Guid InstanceID
+        {
+            get
+            {
+                return new Guid(instanceID);
+            }
         }
 
         public Vector2Int Position
@@ -30,9 +39,10 @@ namespace Roguelike.LoadSave
             }
         }
 
-        public EntityInstanceData(string prefabID)
+        public EntityInstanceData(Guid instanceID, string prefabID)
         {
             this.prefabID = prefabID;
+            this.instanceID = instanceID.ToString();
 
             components = new List<AEntityComponentData>();
         }

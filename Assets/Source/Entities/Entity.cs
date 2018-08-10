@@ -14,10 +14,24 @@ namespace Roguelike.Entities
 
         private Vector2 worldPosition;
         private Vector2Int position;
+        private Guid instanceID = Guid.Empty;
 
         public string PrefabID { get { return prefabID; } }
         public string DisplayName { get { return displayName; } }
         public bool Blocks { get { return blocks; } }
+
+        public Guid InstanceID
+        {
+            get
+            {
+                if (instanceID == Guid.Empty)
+                {
+                    instanceID = Guid.NewGuid();
+                }
+
+                return instanceID;
+            }
+        }
 
         public Vector2Int Position
         {
@@ -73,7 +87,7 @@ namespace Roguelike.Entities
 
         public EntityInstanceData GetData()
         {
-            EntityInstanceData data = new EntityInstanceData(prefabID);
+            EntityInstanceData data = new EntityInstanceData(instanceID, prefabID);
 
             data.Position = Position;
 
@@ -94,6 +108,8 @@ namespace Roguelike.Entities
 
         public void SetData(EntityInstanceData data)
         {
+            instanceID = data.InstanceID;
+
             Position = data.Position;
 
             var components = GetComponents<AEntityComponent>();
@@ -101,6 +117,16 @@ namespace Roguelike.Entities
             foreach (var component in components)
             {
                 component.SetData(data);
+            }
+        }
+
+        private void OnDestroy()
+        {
+            var database = FindObjectOfType<EntityDatabase>();
+
+            if (database != null)
+            {
+                database.RemoveInstance(this);
             }
         }
 

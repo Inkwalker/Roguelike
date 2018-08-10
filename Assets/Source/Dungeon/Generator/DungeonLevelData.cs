@@ -39,13 +39,13 @@ namespace Roguelike.Dungeon.Generator
             return data;
         }
 
-        public List<EntityInstanceData> GetEntitiesData()
+        public EntitiesData GetEntitiesData()
         {
-            var result = new List<EntityInstanceData>();
+            var result = new EntitiesData();
 
             foreach (var entity in entities)
             {
-                var instanceData = new EntityInstanceData(entity.prefab.PrefabID);
+                var instanceData = new EntityInstanceData(System.Guid.NewGuid(), entity.prefab.PrefabID);
 
                 instanceData.Position = new Vector2Int(entity.x, entity.y);
 

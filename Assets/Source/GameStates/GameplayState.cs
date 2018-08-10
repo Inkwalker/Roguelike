@@ -2,6 +2,7 @@
 using Roguelike.Dungeon;
 using Roguelike.LoadSave;
 using Roguelike.Dungeon.Generator;
+using Roguelike.Entities;
 
 namespace Roguelike.GameStates
 {
@@ -33,7 +34,13 @@ namespace Roguelike.GameStates
             var entitiesData = dungeonData.GetEntitiesData();
 
             gameMap.CreateMap(mapData);
-            gameMap.CreateEntities(entitiesData);
+
+            var entityDatabase = FindObjectOfType<EntityDatabase>();
+            foreach (var data in entitiesData)
+            {
+                var entity = entityDatabase.CreateInstance(data);
+                gameMap.AddEntity(entity);
+            }
         }
 
         private void OnEnable()
@@ -48,13 +55,16 @@ namespace Roguelike.GameStates
                 var storage = new GameSaveStorage();
                 var slot = new GameSaveSlot();
 
+                var entityDatabase = FindObjectOfType<EntityDatabase>();
+
                 var mapData = gameMap.GetMapData();
                 var visibilityData = gameMap.GetVisibilityData();
 
                 slot.mapData = mapData;
                 slot.visibilityData = visibilityData;
 
-                var entities = gameMap.GetAllEntities();
+                slot.entities = new EntitiesData();
+                var entities = entityDatabase.GetAllInstances();
 
                 foreach (var entity in entities)
                 {
@@ -72,7 +82,13 @@ namespace Roguelike.GameStates
                 var slot = storage.Read();
 
                 gameMap.CreateMap(slot.mapData);
-                gameMap.CreateEntities(slot.entities);
+
+                var entityDatabase = FindObjectOfType<EntityDatabase>();
+                foreach (var data in slot.entities)
+                {
+                    var entity = entityDatabase.CreateInstance(data);
+                    gameMap.AddEntity(entity);
+                }
             }
         }
 
