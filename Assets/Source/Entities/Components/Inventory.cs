@@ -12,21 +12,31 @@ namespace Roguelike.Entities
 
         private GameMap map;
 
-        private List<Item> items;
-        public Item[] Items { get { return items.ToArray(); } }
+        private Item[] items;
+        public Item[] Items { get { return items; } }
         public int Capacity { get { return capacity; } }
+        public int ItemsCount { get; private set; }
 
         private void Awake()
         {
-            items = new List<Item>(capacity);
+            items = new Item[capacity];
             map = FindObjectOfType<GameMap>();
         }
 
         public AddItemActionResult Add(Item item)
         {
-            if(items.Count < capacity)
+            if(ItemsCount < capacity)
             {
-                items.Add(item);
+                for (int i = 0; i < Items.Length; i++)
+                {
+                    if (Items[i] == null)
+                    {
+                        Items[i] = item;
+                        ItemsCount++;
+
+                        break;
+                    }
+                }
 
                 map.RemoveEntity(item.Entity);
 
@@ -50,12 +60,26 @@ namespace Roguelike.Entities
 
         public bool Contains(Item item)
         {
-            return items.Contains(item);
+            for (int i = 0; i < Items.Length; i++)
+            {
+                if (Items[i] == item) return true;
+            }
+
+            return false;
         }
 
-        public void Remove(Item item)
+        public bool Remove(Item item)
         {
-            items.Remove(item);
+            for (int i = 0; i < Items.Length; i++)
+            {
+                if (Items[i] == item)
+                {
+                    Items[i] = null;
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public IActionResult[] Use(Item item, Entity target)
@@ -100,7 +124,7 @@ namespace Roguelike.Entities
         {
             var data = new InventoryComponentData();
 
-            data.SetItems(items.ToArray());
+            data.SetItems(items);
 
             return data;
         }

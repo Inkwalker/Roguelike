@@ -21,9 +21,12 @@ namespace Roguelike.UI
 
         public void SetItem(Item item)
         {
-            var icon = Instantiate(item.Icon, itemParent);
+            if (item != null)
+            {
+                var icon = Instantiate(item.Icon, itemParent);
 
-            icon.transform.localPosition = Vector3.zero;
+                icon.transform.localPosition = Vector3.zero;
+            }
 
             Item = item;
         }
