@@ -25,18 +25,18 @@ namespace Roguelike.Entities
             return prefabDatabase[prefabID];
         }
 
-        public Entity GetInstance(Guid instanceID)
+        public Entity GetInstance(Guid entityID)
         {
             Entity entity;
 
-            instanceDatabase.TryGetValue(instanceID, out entity);
+            instanceDatabase.TryGetValue(entityID, out entity);
 
             return entity;
         }
 
         public void AddInstance(Entity entity)
         {
-            instanceDatabase.Add(entity.InstanceID, entity);
+            instanceDatabase.Add(entity.EntityID, entity);
         }
 
         public Entity CreateInstance(string prefabID)
@@ -50,21 +50,21 @@ namespace Roguelike.Entities
             return instance;
         }
 
-        public Entity CreateInstance(EntityInstanceData data)
+        public Entity CreateInstance(string prefabID, Guid entityID)
         {
-            var prefab = GetPrefab(data.PrefabID);
+            var prefab = GetPrefab(prefabID);
 
             var instance = Instantiate(prefab);
-            instance.SetData(data);
+            instance.EntityID = entityID;
 
             AddInstance(instance);
 
             return instance;
         }
 
-        public void RemoveInstance(Entity entity)
+        public bool RemoveInstance(Entity entity)
         {
-            instanceDatabase.Remove(entity.InstanceID);
+            return instanceDatabase.Remove(entity.EntityID);
         }
 
         public Entity[] GetAllInstances()

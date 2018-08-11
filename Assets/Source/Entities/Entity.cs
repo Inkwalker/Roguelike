@@ -14,22 +14,33 @@ namespace Roguelike.Entities
 
         private Vector2 worldPosition;
         private Vector2Int position;
-        private Guid instanceID = Guid.Empty;
+        private Guid entityID = Guid.Empty;
 
         public string PrefabID { get { return prefabID; } }
         public string DisplayName { get { return displayName; } }
         public bool Blocks { get { return blocks; } }
 
-        public Guid InstanceID
+        public Guid EntityID
         {
             get
             {
-                if (instanceID == Guid.Empty)
+                if (entityID == Guid.Empty)
                 {
-                    instanceID = Guid.NewGuid();
+                    entityID = Guid.NewGuid();
                 }
 
-                return instanceID;
+                return entityID;
+            }
+            set
+            {
+                var database = FindObjectOfType<EntityDatabase>();
+                bool addToDatabase = false;
+
+                if (database != null) addToDatabase = database.RemoveInstance(this);
+
+                entityID = value;
+
+                if (database != null && addToDatabase) database.AddInstance(this);
             }
         }
 
@@ -87,7 +98,7 @@ namespace Roguelike.Entities
 
         public EntityInstanceData GetData()
         {
-            EntityInstanceData data = new EntityInstanceData(instanceID, prefabID);
+            EntityInstanceData data = new EntityInstanceData(EntityID, PrefabID);
 
             data.Position = Position;
 
@@ -108,8 +119,7 @@ namespace Roguelike.Entities
 
         public void SetData(EntityInstanceData data)
         {
-            instanceID = data.InstanceID;
-
+            EntityID = data.EntityID;
             Position = data.Position;
 
             var components = GetComponents<AEntityComponent>();
@@ -123,11 +133,7 @@ namespace Roguelike.Entities
         private void OnDestroy()
         {
             var database = FindObjectOfType<EntityDatabase>();
-
-            if (database != null)
-            {
-                database.RemoveInstance(this);
-            }
+            if (database != null) database.RemoveInstance(this);
         }
 
         [Serializable]

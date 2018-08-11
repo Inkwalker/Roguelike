@@ -98,12 +98,33 @@ namespace Roguelike.Entities
 
         public override AEntityComponentData GetData()
         {
-            return null; //TODO
+            var data = new InventoryComponentData();
+
+            data.SetItems(items.ToArray());
+
+            return data;
         }
 
         public override void SetData(EntityInstanceData data)
         {
-            //TODO
+            var entityDatabase = FindObjectOfType<EntityDatabase>();
+
+            var invData = data.GetComponentData<InventoryComponentData>();
+
+            if (invData != null)
+            {
+                for (int i = 0; i < Capacity; i++)
+                {
+                    string id = invData.GetItem(i);
+
+                    if (id != string.Empty)
+                    {
+                        var item = entityDatabase.GetInstance(new System.Guid(id));
+
+                        Add(item.GetComponent<Item>());
+                    }
+                }
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using Roguelike.Dungeon;
 using Roguelike.LoadSave;
 using Roguelike.Dungeon.Generator;
 using Roguelike.Entities;
+using System.Collections.Generic;
 
 namespace Roguelike.GameStates
 {
@@ -35,12 +36,7 @@ namespace Roguelike.GameStates
 
             gameMap.CreateMap(mapData);
 
-            var entityDatabase = FindObjectOfType<EntityDatabase>();
-            foreach (var data in entitiesData)
-            {
-                var entity = entityDatabase.CreateInstance(data);
-                gameMap.AddEntity(entity);
-            }
+            CreateEntites(entitiesData);
         }
 
         private void OnEnable()
@@ -83,12 +79,7 @@ namespace Roguelike.GameStates
 
                 gameMap.CreateMap(slot.mapData);
 
-                var entityDatabase = FindObjectOfType<EntityDatabase>();
-                foreach (var data in slot.entities)
-                {
-                    var entity = entityDatabase.CreateInstance(data);
-                    gameMap.AddEntity(entity);
-                }
+                CreateEntites(slot.entities);
             }
         }
 
@@ -99,6 +90,26 @@ namespace Roguelike.GameStates
 
             if (subState == playerTurnState)
                 enemyTurnState.Activate();
+        }
+
+        private void CreateEntites(EntitiesData entitiesData)
+        {
+            var database = FindObjectOfType<EntityDatabase>();
+
+            //instaniating pass
+            foreach (var data in entitiesData)
+            {
+                var entity = database.CreateInstance(data.PrefabID, data.EntityID);
+                gameMap.AddEntity(entity);
+            }
+
+            //data loading pass
+            foreach (var data in entitiesData)
+            {
+                var entity = database.GetInstance(data.EntityID);
+
+                entity.SetData(data);
+            }
         }
     }
 }
