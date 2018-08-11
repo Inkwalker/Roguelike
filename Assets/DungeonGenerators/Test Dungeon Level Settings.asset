@@ -16,6 +16,7 @@ MonoBehaviour:
   minRoomSize: 6
   maxRooms: 30
   maxEntitiesPerRoom: 5
+  player: {fileID: 114810793161265538, guid: 66c7fae5f153b874fab7c1cba85f9ab1, type: 2}
   entities:
   - {fileID: 114920196365887334, guid: 5c8121dd969e04941aaed6cdf656ba27, type: 2}
   - {fileID: 114824405382907254, guid: 74c7cc76fb5ec4943ab4bfbe9254d30c, type: 2}

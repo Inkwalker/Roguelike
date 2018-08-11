@@ -14,6 +14,7 @@ namespace Roguelike.Dungeon.Generator
 
         public int maxEntitiesPerRoom = 5;
 
+        public Entity player;
         public Entity[] entities;
     }
 }

@@ -9,7 +9,6 @@ namespace Roguelike.Dungeon.Generator
         public List<RectInt> rooms;
         public List<DungeonEntityData> entities;
         public bool[,] floor;
-        public Vector2Int playerPosition;
 
         public int Width { get { return floor.GetLength(0); } }
         public int Height { get { return floor.GetLength(1); } }

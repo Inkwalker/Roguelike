@@ -36,8 +36,11 @@ namespace Roguelike.Dungeon.Generator
                     AddEntities(newRoom, settings.entities, settings.maxEntitiesPerRoom, levelData);
 
                     //put the player in the first room
-                    if (i == 0) 
-                        levelData.playerPosition = Vector2Int.RoundToInt(newRoom.center);
+                    if (i == 0)
+                    {
+                        var pos = Vector2Int.RoundToInt(newRoom.center);
+                        levelData.entities.Add(new DungeonEntityData() { x = pos.x, y = pos.y, prefab = settings.player });
+                    }
 
                     if (levelData.rooms.Count > 0)
                     {

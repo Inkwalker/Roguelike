@@ -21,10 +21,19 @@ namespace Roguelike.GameStates
         private MoveState activeMoveState;
         private Item selectedItem;
 
+        private PlayerController Player
+        {
+            get
+            {
+                if (player == null)
+                    player = FindObjectOfType<PlayerController>();
+
+                return player;
+            }
+        }
+
         private void Awake()
         {
-            player = FindObjectOfType<PlayerController>();
-
             gameMap = FindObjectOfType<GameMap>();
             log = FindObjectOfType<MessageLog>();
 
@@ -72,7 +81,7 @@ namespace Roguelike.GameStates
                 }
                 else
                 {
-                    var inv = player.GetComponent<Inventory>();
+                    var inv = Player.GetComponent<Inventory>();
 
                     inventoryWindow.Show(inv);
                 }
@@ -104,7 +113,7 @@ namespace Roguelike.GameStates
         {
             if (targetingSubState.Active == false)
             {
-                activeMoveState = player.MoveTo(tile);
+                activeMoveState = Player.MoveTo(tile);
             }
         }
 
@@ -116,7 +125,7 @@ namespace Roguelike.GameStates
 
                 if (item != null)
                 {
-                    activeMoveState = player.PickItem(item);
+                    activeMoveState = Player.PickItem(item);
                 }
             }
         }
@@ -125,14 +134,14 @@ namespace Roguelike.GameStates
         {
             if (targetingSubState.Active == false)
             {
-                var inventory = player.GetComponent<Inventory>();
+                var inventory = Player.GetComponent<Inventory>();
 
                 if (inventory != null)
                 {
                     if (item.Targeting == Item.TargetMode.Self)
                     {
                         activeMoveState = new MoveState();
-                        activeMoveState.Results.AddRange(inventory.Use(item, player.GetComponent<Entity>()));
+                        activeMoveState.Results.AddRange(inventory.Use(item, Player.GetComponent<Entity>()));
                         activeMoveState.Finished = true;
                     }
                     else
@@ -150,7 +159,7 @@ namespace Roguelike.GameStates
         {
             if (targetingSubState.Active == false)
             {
-                var inventory = player.GetComponent<Inventory>();
+                var inventory = Player.GetComponent<Inventory>();
 
                 if (inventory != null)
                 {
@@ -167,7 +176,7 @@ namespace Roguelike.GameStates
         {
             if (target != null && selectedItem != null)
             {
-                var inventory = player.GetComponent<Inventory>();
+                var inventory = Player.GetComponent<Inventory>();
 
                 var entity = gameMap.GetBlockingEntity(target.Position.x, target.Position.y);
 
