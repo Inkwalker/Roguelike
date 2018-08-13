@@ -5,7 +5,6 @@ using Roguelike.Pathfinding;
 using Roguelike.Entities;
 using Roguelike.Dungeon.Generator;
 using Roguelike.LoadSave;
-using System.Collections.Generic;
 
 namespace Roguelike.Dungeon
 {
@@ -69,15 +68,29 @@ namespace Roguelike.Dungeon
                 }
             }
 
-            //setup the character
-            //var character = FindObjectOfType<PlayerController>();
-            //var ce = character.GetComponent<Entity>();
-            //ce.Position = dungeon.playerPosition;
-            //entityMap.Add(ce);
-
             pathfindingNodes = new TileGridNodes(this);
 
             RecalulatePathfinding();
+        }
+
+        public void CreateEntites(EntitiesData entitiesData)
+        {
+            var database = FindObjectOfType<EntityDatabase>();
+
+            //instaniating pass
+            foreach (var data in entitiesData)
+            {
+                var entity = database.CreateInstance(data.PrefabID, data.EntityID);
+                AddEntity(entity);
+            }
+
+            //data loading pass
+            foreach (var data in entitiesData)
+            {
+                var entity = database.GetInstance(data.EntityID);
+
+                entity.SetData(data);
+            }
         }
 
         public GameMapData GetMapData()

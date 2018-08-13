@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 using Roguelike.Dungeon;
 using Roguelike.LoadSave;
-using Roguelike.Dungeon.Generator;
 using Roguelike.Entities;
-using System.Collections.Generic;
 
 namespace Roguelike.GameStates
 {
@@ -12,14 +10,10 @@ namespace Roguelike.GameStates
         [SerializeField] GameSubState enemyTurnState;
         [SerializeField] GameSubState playerTurnState;
 
-        [SerializeField] DungeonLevelSettings generatorSettings;
-
         private GameMap gameMap;
 
         private void Awake()
         {
-            gameMap = FindObjectOfType<GameMap>();
-
             enemyTurnState.Deactivate();
             playerTurnState.Deactivate();
 
@@ -29,14 +23,7 @@ namespace Roguelike.GameStates
 
         private void Start()
         {
-            var dungeonData = DungeonGenerator.Generate(generatorSettings);
-
-            var mapData = dungeonData.GetGameMapData();
-            var entitiesData = dungeonData.GetEntitiesData();
-
-            gameMap.CreateMap(mapData);
-
-            CreateEntites(entitiesData);
+            gameMap = FindObjectOfType<GameMap>();
         }
 
         private void OnEnable()
@@ -46,6 +33,7 @@ namespace Roguelike.GameStates
 
         private void Update()
         {
+            //Save game
             if (Input.GetKeyDown(KeyCode.F5))
             {
                 var storage = new GameSaveStorage();
@@ -72,15 +60,16 @@ namespace Roguelike.GameStates
                 storage.Write(slot);
             }
 
-            if (Input.GetKeyDown(KeyCode.F6))
-            {
-                var storage = new GameSaveStorage();
-                var slot = storage.Read();
+            //Load game
+            //if (Input.GetKeyDown(KeyCode.F6))
+            //{
+            //    var storage = new GameSaveStorage();
+            //    var slot = storage.Read();
 
-                gameMap.CreateMap(slot.mapData);
+            //    gameMap.CreateMap(slot.mapData);
 
-                CreateEntites(slot.entities);
-            }
+            //    CreateEntites(slot.entities);
+            //}
         }
 
         private void OnStateDeactivated(GameSubState subState)
@@ -90,26 +79,6 @@ namespace Roguelike.GameStates
 
             if (subState == playerTurnState)
                 enemyTurnState.Activate();
-        }
-
-        private void CreateEntites(EntitiesData entitiesData)
-        {
-            var database = FindObjectOfType<EntityDatabase>();
-
-            //instaniating pass
-            foreach (var data in entitiesData)
-            {
-                var entity = database.CreateInstance(data.PrefabID, data.EntityID);
-                gameMap.AddEntity(entity);
-            }
-
-            //data loading pass
-            foreach (var data in entitiesData)
-            {
-                var entity = database.GetInstance(data.EntityID);
-
-                entity.SetData(data);
-            }
         }
     }
 }
