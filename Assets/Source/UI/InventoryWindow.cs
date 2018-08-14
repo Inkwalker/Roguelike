@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Roguelike.Entities;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -8,19 +7,19 @@ namespace Roguelike.UI
 {
     public class InventoryWindow : MonoBehaviour
     {
-        [SerializeField]
-        private InventorySlot slotPrefab;
+        [SerializeField] GameObject content;
+        [SerializeField] InventorySlot slotPrefab;
+        [SerializeField] GridLayoutGroup grid;
 
-        GridLayoutGroup grid;
         List<InventorySlot> slots;
+
+        public bool Visible { get; private set; }
 
         public InventoryWindowEvent ItemSelected;
         public InventoryWindowEvent ItemDropped;
 
         private void Awake()
         {
-            grid = GetComponentInChildren<GridLayoutGroup>();
-
             //Clear the grid from any mock elements
             for (int i = 0; i < grid.transform.childCount; i++)
             {
@@ -28,11 +27,13 @@ namespace Roguelike.UI
             }
 
             slots = new List<InventorySlot>();
+
+            Visible = content.activeSelf;
         }
 
         public void Show(Inventory inventory)
         {
-            gameObject.SetActive(true);
+            content.SetActive(true);
 
             foreach (var slot in slots)
             {
@@ -56,6 +57,8 @@ namespace Roguelike.UI
 
                 slots.Add(slot);
             }
+
+            Visible = content.activeSelf;
         }
 
         public void Hide()
@@ -70,7 +73,9 @@ namespace Roguelike.UI
                 slots.Clear();
             }
 
-            gameObject.SetActive(false);
+            content.SetActive(false);
+
+            Visible = content.activeSelf;
         }
 
         private void OnItemSelected(InventorySlot slot)

@@ -58,6 +58,9 @@ namespace Roguelike.GameStates
                 }
 
                 storage.Write(slot);
+
+                var log = FindObjectOfType<UI.MessageLog>();
+                log.AddMessage(new Actions.MessageActionResult("Game saved."));
             }
 
             //Load game

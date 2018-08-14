@@ -3,12 +3,13 @@ using System.Collections;
 using UnityEngine.Events;
 using Roguelike.Dungeon;
 using Roguelike.Entities;
+using Roguelike.UI;
 
 namespace Roguelike.GameStates
 {
     public class TargetingSubState : GameSubState
     {
-        [SerializeField] GameObject targetingMessage;
+        private TargetingMessageWindow targetingMessage;
 
         private MouseManager mouseManager;
 
@@ -23,7 +24,8 @@ namespace Roguelike.GameStates
         {
             base.Activate();
 
-            targetingMessage.SetActive(true);
+            targetingMessage = FindObjectOfType<TargetingMessageWindow>();
+            targetingMessage.Show();
 
             mouseManager.TileSelected.AddListener(OnTileSelected);
             mouseManager.EntitySelected.AddListener(OnEntitySelected);
@@ -31,13 +33,13 @@ namespace Roguelike.GameStates
 
         public override void Deactivate()
         {
-            if (mouseManager != null)
+            if (Active)
             {
                 mouseManager.TileSelected.RemoveListener(OnTileSelected);
                 mouseManager.EntitySelected.RemoveListener(OnEntitySelected);
-            }
 
-            targetingMessage.SetActive(false);
+                targetingMessage.Hide();
+            }
 
             base.Deactivate();
         }

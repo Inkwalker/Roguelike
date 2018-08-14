@@ -32,19 +32,14 @@ namespace Roguelike.GameStates
             }
         }
 
-        private void Awake()
-        {
-            gameMap = FindObjectOfType<GameMap>();
-            log = FindObjectOfType<MessageLog>();
-
-            mouseManager = FindObjectOfType<MouseManager>();
-
-            inventoryWindow = FindObjectOfType<InventoryWindow>();
-        }
-
         public override void Activate()
         {
             base.Activate();
+
+            gameMap = FindObjectOfType<GameMap>();
+            log = FindObjectOfType<MessageLog>();
+            mouseManager = FindObjectOfType<MouseManager>();
+            inventoryWindow = FindObjectOfType<InventoryWindow>();
 
             mouseManager.TileSelected.AddListener(OnTileSelected);
             mouseManager.EntitySelected.AddListener(OnEntitySelected);
@@ -57,15 +52,19 @@ namespace Roguelike.GameStates
 
         public override void Deactivate()
         {
-            mouseManager.TileSelected.RemoveListener(OnTileSelected);
-            mouseManager.EntitySelected.RemoveListener(OnEntitySelected);
+            if (Active)
+            {
+                mouseManager.TileSelected.RemoveListener(OnTileSelected);
+                mouseManager.EntitySelected.RemoveListener(OnEntitySelected);
 
-            inventoryWindow.ItemSelected.RemoveListener(OnInventoryItemSelected);
-            inventoryWindow.ItemDropped.RemoveListener(OnInventoryItemDropped);
+                inventoryWindow.ItemSelected.RemoveListener(OnInventoryItemSelected);
+                inventoryWindow.ItemDropped.RemoveListener(OnInventoryItemDropped);
 
-            targetingSubState.TargetSelected.RemoveListener(OnTargetSelected);
+                targetingSubState.TargetSelected.RemoveListener(OnTargetSelected);
 
-            inventoryWindow.Hide();
+                inventoryWindow.Hide();
+            }
+
             targetingSubState.Deactivate();
 
             base.Deactivate();
@@ -75,7 +74,7 @@ namespace Roguelike.GameStates
         {
             if (Input.GetKeyDown(KeyCode.I))
             {
-                if (inventoryWindow.gameObject.activeSelf)
+                if (inventoryWindow.Visible)
                 {
                     inventoryWindow.Hide();
                 }
