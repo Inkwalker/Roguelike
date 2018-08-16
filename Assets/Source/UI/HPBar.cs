@@ -5,20 +5,33 @@ namespace Roguelike.UI
 {
     public class HPBar : ProgressBar
     {
-        [SerializeField]
-        Fighter character;
+        public Fighter Character { get; set; }
 
         protected override void SetText(float value)
         {
-            int maxHP = character.MaxHP;
-            int hp = character.HP;
+            if (Character != null)
+            {
+                int maxHP = Character.MaxHP;
+                int hp = Character.HP;
 
-            progressText.text = string.Format("{0} / {1}", hp, maxHP);
+                progressText.text = string.Format("{0} / {1}", hp, maxHP);
+            }
+            else
+            {
+                progressText.text = "";
+            }
         }
 
         private void Update()
         {
-            Value = (float)character.HP / (float)character.MaxHP;
+            if (Character != null)
+            {
+                Value = (float)Character.HP / (float)Character.MaxHP;
+            }
+            else
+            {
+                Value = 1f;
+            }
         }
     }
 }

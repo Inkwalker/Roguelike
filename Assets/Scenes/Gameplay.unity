@@ -1024,7 +1024,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   progressImage: {fileID: 2087239426}
-  character: {fileID: 911760872}
 --- !u!1001 &638713398
 Prefab:
   m_ObjectHideFlags: 0
@@ -1720,6 +1719,7 @@ MonoBehaviour:
   inventoryWindow: {fileID: 834388780}
   targetingWindow: {fileID: 1825532087}
   gameOverWindow: {fileID: 1331287030}
+  hpBar: {fileID: 586698134}
 --- !u!1001 &911529828
 Prefab:
   m_ObjectHideFlags: 0
@@ -1844,12 +1844,6 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224595379124542916, guid: b7ad1bde1fb7f864cb53eeda1404e322,
     type: 2}
   m_PrefabInternal: {fileID: 911529828}
---- !u!114 &911760872 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114127218514125236, guid: 66c7fae5f153b874fab7c1cba85f9ab1,
-    type: 2}
-  m_PrefabInternal: {fileID: 835238532}
-  m_Script: {fileID: 11500000, guid: e23f4824951da1f469ffcc92576fe047, type: 3}
 --- !u!1001 &919600344
 Prefab:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@
 using Roguelike.Dungeon;
 using Roguelike.LoadSave;
 using Roguelike.Entities;
+using Roguelike.UI;
 
 namespace Roguelike.GameStates
 {
@@ -23,6 +24,10 @@ namespace Roguelike.GameStates
         private void OnEnable()
         {
             gameMap = FindObjectOfType<GameMap>();
+
+            var character = FindObjectOfType<PlayerController>();
+            GameplayUI.Instance.HPBar.Character = character.GetComponent<Fighter>();
+
             playerTurnState.Activate();
         }
 
