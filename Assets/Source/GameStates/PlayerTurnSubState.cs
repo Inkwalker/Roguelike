@@ -21,6 +21,8 @@ namespace Roguelike.GameStates
         private MoveState activeMoveState;
         private Item selectedItem;
 
+        public GameSubStateEvent PlayerTurnEnded;
+
         private PlayerController Player
         {
             get
@@ -39,7 +41,7 @@ namespace Roguelike.GameStates
             gameMap = FindObjectOfType<GameMap>();
             log = FindObjectOfType<MessageLog>();
             mouseManager = FindObjectOfType<MouseManager>();
-            inventoryWindow = FindObjectOfType<InventoryWindow>();
+            inventoryWindow = GameplayUI.Instance.InventoryWindow;
 
             mouseManager.TileSelected.AddListener(OnTileSelected);
             mouseManager.EntitySelected.AddListener(OnEntitySelected);
@@ -103,7 +105,7 @@ namespace Roguelike.GameStates
 
                     activeMoveState = null;
 
-                    Deactivate();
+                    PlayerTurnEnded.Invoke(this);
                 }
             }
         }

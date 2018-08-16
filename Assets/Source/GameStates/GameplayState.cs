@@ -7,27 +7,22 @@ namespace Roguelike.GameStates
 {
     public class GameplayState : GameState
     {
-        [SerializeField] GameSubState enemyTurnState;
-        [SerializeField] GameSubState playerTurnState;
+        [SerializeField] EnemyTurnSubState enemyTurnState;
+        [SerializeField] PlayerTurnSubState playerTurnState;
+        [SerializeField] GameState gameOverState;
 
         private GameMap gameMap;
 
         private void Awake()
         {
-            enemyTurnState.Deactivate();
-            playerTurnState.Deactivate();
-
-            enemyTurnState.Deactivated.AddListener(OnStateDeactivated);
-            playerTurnState.Deactivated.AddListener(OnStateDeactivated);
-        }
-
-        private void Start()
-        {
-            gameMap = FindObjectOfType<GameMap>();
+            enemyTurnState.OnEnemyTurnEnded.AddListener(OnTurnEnded);
+            enemyTurnState.OnPlayerDead.AddListener(OnPlayerDead);
+            playerTurnState.PlayerTurnEnded.AddListener(OnTurnEnded);
         }
 
         private void OnEnable()
         {
+            gameMap = FindObjectOfType<GameMap>();
             playerTurnState.Activate();
         }
 
@@ -75,13 +70,27 @@ namespace Roguelike.GameStates
             //}
         }
 
-        private void OnStateDeactivated(GameSubState subState)
+        private void OnPlayerDead(GameSubState subState)
+        {
+            playerTurnState.Deactivate();
+            enemyTurnState.Deactivate();
+
+            TransitionToState(gameOverState);
+        }
+
+        private void OnTurnEnded(GameSubState subState)
         {
             if (subState == enemyTurnState)
+            {
                 playerTurnState.Activate();
+                enemyTurnState.Deactivate();
+            }
 
             if (subState == playerTurnState)
+            {
                 enemyTurnState.Activate();
+                playerTurnState.Deactivate();
+            }
         }
     }
 }

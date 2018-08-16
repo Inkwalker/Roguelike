@@ -17,6 +17,9 @@ namespace Roguelike.GameStates
         private MessageLog log;
         private GameMap gameMap;
 
+        public GameSubStateEvent OnEnemyTurnEnded;
+        public GameSubStateEvent OnPlayerDead;
+
         private void Awake()
         {
             log = FindObjectOfType<MessageLog>();
@@ -45,6 +48,7 @@ namespace Roguelike.GameStates
                     {
                         //player is dead!
                         log.AddMessage(new MessageActionResult("You died!"));
+                        OnPlayerDead.Invoke(this);
                     }
                 }
 
@@ -64,7 +68,8 @@ namespace Roguelike.GameStates
                 }
                 else
                 {
-                    Deactivate(); //all enemies have moved
+                    //all enemies have moved
+                    OnEnemyTurnEnded.Invoke(this); 
                 }
             }
         }

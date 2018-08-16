@@ -30,6 +30,8 @@ namespace Roguelike.GameStates
 
             yield return null; //wait until all GameObjects are initialized
 
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(gameplayScene));
+
             var gameMap = FindObjectOfType<GameMap>();
 
             var storage = new GameSaveStorage();

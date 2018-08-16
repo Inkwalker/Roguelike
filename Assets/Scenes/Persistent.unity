@@ -163,6 +163,16 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Roguelike.GameStates.GameSubState+GameSubStateEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnEnemyTurnEnded:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Roguelike.GameStates.GameSubState+GameSubStateEvent, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnPlayerDead:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Roguelike.GameStates.GameSubState+GameSubStateEvent, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &640722576
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,6 +202,7 @@ Transform:
   - {fileID: 1734187124}
   - {fileID: 1573038903}
   - {fileID: 1350099196}
+  - {fileID: 2022994394}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -247,6 +258,11 @@ MonoBehaviour:
     m_TypeName: Roguelike.GameStates.GameSubState+GameSubStateEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   targetingSubState: {fileID: 2068736073}
+  PlayerTurnEnded:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Roguelike.GameStates.GameSubState+GameSubStateEvent, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &1322874370
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,6 +348,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyTurnState: {fileID: 50864106}
   playerTurnState: {fileID: 894779304}
+  gameOverState: {fileID: 2022994395}
 --- !u!1 &1379897369
 GameObject:
   m_ObjectHideFlags: 0
@@ -460,6 +477,48 @@ MonoBehaviour:
   gameplayScene: Gameplay
   gameplayState: {fileID: 1350099197}
   generatorSettings: {fileID: 11400000, guid: 3042fe61ee152a44189a3e051474e650, type: 2}
+--- !u!1 &2022994393
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2022994394}
+  - component: {fileID: 2022994395}
+  m_Layer: 0
+  m_Name: GameOverState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2022994394
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2022994393}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 640722577}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2022994395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2022994393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f9fcb67d8832634c89846c0bafe6c4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameplayScene: Gameplay
+  mainMenuState: {fileID: 1379897371}
 --- !u!1 &2068736071
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,7 +569,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Roguelike.GameStates.GameSubState+GameSubStateEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  targetingMessage: {fileID: 0}
   TargetSelected:
     m_PersistentCalls:
       m_Calls: []
