@@ -94,6 +94,16 @@ namespace Roguelike.Entities
             if (fighterData != null)
             {
                 HP = fighterData.HP;
+
+                if (HP <= 0)
+                {
+                    var animator = GetComponentInChildren<Animator>();
+
+                    if (animator != null)
+                    {
+                        animator.SetBool("Dead", true);
+                    }
+                }
             }
         }
     }
